@@ -8,6 +8,7 @@ import {
     validateMatKhau,
     validateNgayLam,
     validateTaiKhoan,
+    validateLuongCB,
 } from "../js/validations.js";
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
@@ -22,26 +23,53 @@ $("#btnThemNV").onclick = () => {
         Object.fromEntries(arrayInput.map((input) => [input.id, input.value]))
     );
 
-    let { taiKhoan, hoTen, email, matKhau, ngayLam, luongCoBan, gioLam } = nv;
+    let {
+        taiKhoan,
+        hoTen,
+        email,
+        matKhau,
+        ngayLam,
+        luongCoBan,
+        gioLam,
+        chucVu,
+    } = nv;
+
     let valid = true;
     valid &=
         kiemTraRong(taiKhoan, "tbTKNV", "Mã nhân viên") &&
-        kiemTraRong(hoTen, "tbTen", "Tên nhân viên") &&
-        kiemTraRong(email, "tbEmail", "Email") &&
-        kiemTraRong(matKhau, "tbMatKhau", "Mật Khẩu") &&
-        kiemTraRong(ngayLam, "tbNgay", "Ngày làm") &&
-        kiemTraRong(luongCoBan, "tbLuongCB", "Lương cơ bản") &&
-        kiemTraRong(gioLam, "tbGiolam", "Giờ làm");
+        validateTaiKhoan(taiKhoan, "tbTKNV", "Mã nhân viên");
 
     valid &=
-        validateTaiKhoan(taiKhoan, "tbTKNV", "Mã nhân viên") &&
-        validateHoTen(hoTen, "tbTen", "Tên nhân viên") &&
-        validateEmail(email, "tbEmail", "Email") &&
-        validateMatKhau(matKhau, "tbMatKhau", "Mật Khẩu") &&
-        validateNgayLam(ngayLam, "tbNgay", "Ngày làm") &&
-        validateLuongCB(luongCoBan, "tbLuongCB", "Lương cơ bản") &&
-        validateChucVu(chucVu, "tbChucVu", "Chức vụ") &&
+        kiemTraRong(hoTen, "tbTen", "Tên nhân viên") &&
+        validateHoTen(hoTen, "tbTen", "Tên nhân viên");
+
+    valid &=
+        kiemTraRong(email, "tbEmail", "Email") &&
+        validateEmail(email, "tbEmail", "Email");
+
+    valid &=
+        kiemTraRong(matKhau, "tbMatKhau", "Mật Khẩu") &&
+        validateMatKhau(matKhau, "tbMatKhau", "Mật Khẩu");
+
+    valid &=
+        kiemTraRong(ngayLam, "tbNgay", "Ngày làm") &&
+        validateNgayLam(ngayLam, "tbNgay", "Ngày làm");
+
+    valid &=
+        kiemTraRong(luongCoBan, "tbLuongCB", "Lương cơ bản") &&
+        validateLuongCB(luongCoBan, "tbLuongCB", "Lương cơ bản");
+
+    valid &=
+        kiemTraRong(chucVu, "tbChucVu", "Chức vụ") &&
+        validateChucVu(chucVu, "tbChucVu", "Chức vụ");
+
+    valid &=
+        kiemTraRong(gioLam, "tbGiolam", "Giờ làm") &&
         validateGioLam(gioLam, "tbGiolam", "Giờ làm");
+
+    console.log(valid);
+
+    // Nếu tất cả đều hợp lệ, thêm nhân viên
     if (valid) {
         arrNhanVien.push(nv);
         renderNhanVien(arrNhanVien);

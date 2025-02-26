@@ -1,5 +1,5 @@
 export function kiemTraRong(value, selectorId, textErr) {
-    if (value.trim() === "") {
+    if (!value || value.trim() === "") {
         document.getElementById(
             selectorId
         ).innerHTML = `${textErr} không được bỏ trống`;
@@ -89,7 +89,7 @@ export function validateLuongCB(luongCB, selectorId, textErr) {
 
 // Kiểm tra chức vụ
 export function validateChucVu(chucVu, selectorId, textErr) {
-    let chucVuHopLe = ["Giám đốc", "Trưởng Phòng", "Nhân Viên"];
+    let chucVuHopLe = ["Sếp", "Trưởng phòng", "Nhân viên"];
     if (!chucVuHopLe.includes(chucVu)) {
         document.getElementById(
             selectorId
